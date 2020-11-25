@@ -3,6 +3,7 @@ package main
 import(
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
+	"net/http"
 	controllers "github.com/pragistyo/chatt/controllers"
 )
 
