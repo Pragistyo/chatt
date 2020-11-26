@@ -31,7 +31,7 @@ func main(){
 	api.HandleFunc("/conversation-card/",controllers.CardConversation).Methods(http.MethodGet)
 
 	//PATCH
-	api.HandleFunc("/update-read-message/",controllers.UpdateMessagesRead).Methods(http.MethodPatch)
+	api.HandleFunc("/update-read-message/{chat_room_id}/{user_id}",controllers.UpdateMessagesRead).Methods(http.MethodPatch)
 
 	PORT := os.Getenv( "PORT" )
 	log.Fatal(http.ListenAndServe(PORT, r))
