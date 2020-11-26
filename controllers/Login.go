@@ -48,8 +48,7 @@ func CreateUser(w http.ResponseWriter,r *http.Request){
 
 	w.Header().Set("Content-Type","application/json")
 	w.WriteHeader(http.StatusCreated)
-	respString, _ := json.Marshal(Response{"Message": "user created", "status": 401, "new_id":user_id }
-	)
+	respString, _ := json.Marshal(Response{"Message": "user created", "status": 401, "new_id":user_id })
 	w.Write([]byte  (respString))
 	return
 }
