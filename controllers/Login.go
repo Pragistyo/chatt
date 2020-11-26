@@ -11,6 +11,12 @@ import (
 )
 
 type Response map[string]interface{}
+type ResponseSingleUser struct {
+	Message		string					`json:"message"` 
+	Status		int32					`json:"status"` 
+	Data		models.User				`json:"Users"` 
+}
+
 
 func Login(w http.ResponseWriter,r *http.Request){
 	
@@ -21,6 +27,7 @@ func Login(w http.ResponseWriter,r *http.Request){
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte  ("error parse input"))
+		return
 	}
 
 	var email string = r.FormValue("email")
@@ -34,12 +41,12 @@ func Login(w http.ResponseWriter,r *http.Request){
 	if err!=nil {
 		log.Println(" ==== error login: ", err)
 		w.WriteHeader(http.StatusNotFound)
-		respString, _ := json.Marshal( ResponseError{ "Message": "user not found ", "Status": 404 } )
+		respString, _ := json.Marshal( Response{ "Message": "user not found ", "Status": 404 } )
 		w.Write([]byte  (respString))
 		return
 	}
 
-	var resp models.ResponseSingleUser
+	var resp ResponseSingleUser
 	resp.Message = "success"
 	resp.Status = 200
 	resp.Data = u
