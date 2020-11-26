@@ -120,7 +120,7 @@ func dropTable(){
 	DROP TABLE ChatRoom
 	`
 
-	alterChatRoom, err := conn.Exec(context.Background(), query)
+	dropTable, err := conn.Exec(context.Background(), query)
 
 	if err!=nil {
 		log.Println("====== error")
@@ -129,7 +129,28 @@ func dropTable(){
 	}
 
 	log.Println("==========")
-	log.Println(alterChatRoom)
+	log.Println(dropTable)
 	return
 
+}
+
+func alterChatRoom(){
+	conn := db.Connect()
+	defer conn.Close()
+
+	var query string = `
+	ALTER TABLE chatroom RENAME COLUMN user_id to user_id_1;
+	ALTER TABLE chatroom ADD COLUMN user_id_2 integer REFERENCES UserChat (user_id)
+	`
+	alterTable, err := conn.Exec(context.Background(), query)
+
+	if err!=nil {
+		log.Println("====== error")
+		log.Println(err)
+		panic(err)
+	}
+
+	log.Println("==========")
+	log.Println(alterTable)
+	return
 }
