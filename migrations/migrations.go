@@ -19,11 +19,11 @@ func main() {
 	}
 
 	log.Println("start migrations ====== ")
+	dropTable()
 	createUser()
 	createChatRoom()
-	// createChatRoom_UserChat()
 	createMessage()
-	// dropTable()
+	// createChatRoom_UserChat()
 	return
 }
 
@@ -53,7 +53,7 @@ func createChatRoom(){
 	defer conn.Close()
 
 	var query string = `CREATE TABLE IF NOT EXISTS ChatRoom(
-		chat_room_name VARCHAR(120) UNIQUE,
+		chat_room_name VARCHAR(120) UNIQUE PRIMARY KEY,
 		user_id integer REFERENCES UserChat (user_id)
 	) `
 
@@ -116,9 +116,8 @@ func dropTable(){
 	defer conn.Close()
 
 	var query string = `
-	DROP TABLE ChatRoom_UserChat
 	DROP TABLE Message;
-	DROP TABLE ChatRoom;
+	DROP TABLE ChatRoom
 	`
 
 	alterChatRoom, err := conn.Exec(context.Background(), query)
