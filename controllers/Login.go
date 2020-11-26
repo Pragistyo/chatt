@@ -7,12 +7,35 @@ import (
 	"context"
 	"encoding/json"
 	db "github.com/Pragistyo/chatt/db"
+	models "github.com/Pragistyo/chatt/models"
 )
 
 type Response map[string]interface{}
 
 func Login(w http.ResponseWriter,r *http.Request){
 	
+	conn := db.Connect();
+	defer conn.Close()
+
+	err := r.ParseMultipartForm(64) // max memory 64kb
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte  ("error parse input"))
+	}
+
+	var email string = r.FormValue("email")
+	var u  models.User // id, email, name
+	row := conn.QueryRow( context.Background(), "SELECT user_id, email, name FROM UserChat WHERE email=$1",   email)
+
+	err = row.Scan(&u.Id, &u.Email, & u.Name)
+	if err!=nil {
+		log.Println(" ==== error login: ", err)
+		log.Fatal(err)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(u)
 }
 
 func CreateUser(w http.ResponseWriter,r *http.Request){
