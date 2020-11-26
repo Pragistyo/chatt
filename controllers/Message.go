@@ -5,12 +5,14 @@ import (
 	"net/http"
 	"time"
 	"encoding/json"
+	// "database/sql"
+	// "reflect"
+	"context"
 
 	db "github.com/Pragistyo/chatt/db"
-	"github.com/Pragistyo/chatt/models"
+	// "github.com/Pragistyo/chatt/models"
 )
 
-type Response map[string]interface{}
 
 func PostMessage(w http.ResponseWriter,r *http.Request){
 	conn := db.Connect()
@@ -20,7 +22,6 @@ func PostMessage(w http.ResponseWriter,r *http.Request){
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte  ("error parse input"))
-		panic(err)
 		return
 	}
 
@@ -28,20 +29,19 @@ func PostMessage(w http.ResponseWriter,r *http.Request){
 	var chat_room_name string = r.FormValue("chat_room_name")
 	var user_post_id string = r.FormValue("user_post_id")
 	var sentTime time.Time = time.Now()
-	var readTime time.Time = nil
 
-	var msg models.Message
+	var id int32
 
 	sqlStatement := `
-	INSERT INTO Users (message, sent_time, read_time, user_id, chat_room_name)
+	INSERT INTO Message (message, sent_time, read_time, user_id, chat_room_name)
 	VALUES ($1, $2, $3, $4, $5)
 	RETURNING id
 	`
 
-	err = conn.QueryRow(context.Background(), sqlStatement, message, sentTime, readTime, user_post_id, chat_room_name).Scan(&id)
+	err = conn.QueryRow(context.Background(), sqlStatement, message, sentTime, nil, user_post_id, chat_room_name).Scan(&id)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-	   log.Println(err)
+	   log.Println("hey there is error : ======> ", err)
 	   return
 	}
 
@@ -55,7 +55,7 @@ func PostMessage(w http.ResponseWriter,r *http.Request){
 }
 
 func GetMessagesChatRoom(w http.ResponseWriter,r *http.Request){
-
+	
 }
 
 func UpdateMessagesRead(w http.ResponseWriter,r *http.Request){

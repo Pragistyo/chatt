@@ -70,7 +70,7 @@ func CreateChatRoom(w http.ResponseWriter,r *http.Request){
 func checkChatRoomExist( possibleName [2]string) bool {
 	conn := db.Connect()
 	defer conn.Close()
-	
+	var flag bool
 
 	type ResponseChatRoom struct {
 		user_id	int32
@@ -85,9 +85,11 @@ func checkChatRoomExist( possibleName [2]string) bool {
 	err := row.Scan(&cr.chat_room_name )
 
 	if err!=nil {
-		// if recorded, do not replicate insert
-		log.Println(" should be not found 0 ", err)
-		return true
+		// error not found, it is what we wanted, return true
+		log.Println(" should be not found 0 = true", err)
+		flag = true
+	}else if err == nil {
+		flag = false
 	}
 
 
@@ -97,16 +99,15 @@ func checkChatRoomExist( possibleName [2]string) bool {
 	err = row.Scan(&cr.chat_room_name )
 
 	if err!=nil {
-		// if recorded, do not replicate insert
-		log.Println(" should be not found 1 ", err)
-		return true
+		// error not found, it is what we wanted, return true
+		log.Println(" should be not found 1  = true ", err)
+		flag = true
+	}else if err == nil {
+		flag = false
 	}
 	
 
 	//row exist
-	return false
-
-	
-
+	return flag
 
 }
