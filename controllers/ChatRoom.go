@@ -9,7 +9,7 @@ import (
 	db "github.com/Pragistyo/chatt/db"
 )
 
-type ResponseBadRequest map[string]interface{}
+type Response map[string]interface{}
 
 func CreateChatRoom(w http.ResponseWriter,r *http.Request){
 	conn := db.Connect()
@@ -38,7 +38,7 @@ func CreateChatRoom(w http.ResponseWriter,r *http.Request){
 	// validation
 	if !checkChatRoomExist( possibleName){
 		w.WriteHeader(http.StatusBadRequest)
-		respString, _ := json.Marshal( ResponseBadRequest{ "Message": "duplicate chat_room_name", "Status": 400 } )
+		respString, _ := json.Marshal( Response{ "Message": "duplicate chat_room_name", "Status": 400 } )
 		w.Write([]byte  (respString))
 		return
 	}
@@ -53,14 +53,15 @@ func CreateChatRoom(w http.ResponseWriter,r *http.Request){
 	if err!=nil {
 			log.Println("Error create chat room: ", err)
 			w.WriteHeader(http.StatusBadRequest)
-			respString, _ := json.Marshal( ResponseBadRequest{ "Message": "error create chat room", "Status": 400, "error":err } )
+			respString, _ := json.Marshal( Response{ "Message": "error create chat room", "Status": 400, "error":err } )
 			w.Write([]byte  (respString))
 			return
 	}
 
 
 	w.WriteHeader(http.StatusBadRequest)
-	respString, _ := json.Marshal( ResponseBadRequest{ "Message": "success create chat room", "Status": 201, "chat_room_name": chat_room_name } )
+	w.Header().Set("Content-Type", "application/json")
+	respString, _ := json.Marshal( Response{ "Message": "success create chat room", "Status": 201, "chat_room_name": chat_room_name } )
 	w.Write([]byte  (respString))
 	return
 
