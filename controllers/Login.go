@@ -25,8 +25,8 @@ func CreateUser(w http.ResponseWriter,r *http.Request){
 		panic(err)
 	}
 
-	var name string = r.FormValue("username")
-	var email string = r.FormValue("password")
+	var name string = r.FormValue("name")
+	var email string = r.FormValue("email")
 	var user_id int32
 
 	//email validation
@@ -36,12 +36,12 @@ func CreateUser(w http.ResponseWriter,r *http.Request){
 					VALUES ($1, $2)
 					RETURNING user_id
 		`
-	err = conn.QueryRow(context.Background(), sqlStatement, email, name).Scan(&user_id)
+	err = conn.QueryRow(context.Background(), sqlStatement, name, email).Scan(&user_id)
 
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
-		respString, _ := json.Marshal( Response{ "Message": "Failed to create user", "Status": 400 } )
+		respString, _ := json.Marshal( Response{ "Message": "Failed to create user", "Status": 400, "error": err } )
 		w.Write([]byte  (respString))
 		return 
 	}
