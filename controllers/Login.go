@@ -10,7 +10,7 @@ import (
 	models "github.com/Pragistyo/chatt/models"
 )
 
-type Response map[string]interface{}
+// type Response map[string]interface{}
 type ResponseSingleUser struct {
 	Message		string					`json:"message"` 
 	Status		int32					`json:"status"` 
