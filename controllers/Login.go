@@ -25,17 +25,28 @@ func Login(w http.ResponseWriter,r *http.Request){
 
 	var email string = r.FormValue("email")
 	var u  models.User // id, email, name
-	row := conn.QueryRow( context.Background(), "SELECT user_id, email, name FROM UserChat WHERE email=$1",   email)
+	var queryGetUser = "SELECT user_id, email, name FROM UserChat WHERE email=$1"
+
+	row := conn.QueryRow( context.Background(), queryGetUser,   email)
 
 	err = row.Scan(&u.Id, &u.Email, & u.Name)
+
 	if err!=nil {
 		log.Println(" ==== error login: ", err)
-		log.Fatal(err)
+		w.WriteHeader(http.StatusNotFound)
+		respString, _ := json.Marshal( ResponseError{ "Message": "user not found ", "Status": 404 } )
+		w.Write([]byte  (respString))
+		return
 	}
+
+	var resp models.ResponseSingleUser
+	resp.Message = "success"
+	resp.Status = 200
+	resp.Data = u
 
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(u)
+	json.NewEncoder(w).Encode(resp)
 }
 
 func CreateUser(w http.ResponseWriter,r *http.Request){
