@@ -14,8 +14,21 @@ func main(){
 	}
 
 	r:= mux.NewRouter()
-	api := r.PathPrefix("/api/v1").Subrouter()
-	api.HandleFunc("/user/",controllers.GetAllUser).Methods(http.MethodGet)
+	api := r.PathPrefix("/go-chat/api/v1").Subrouter()
+
+
+	//POST
+	api.HandleFunc("/login/",controllers.Login).Methods(http.MethodPost)
+	api.HandleFunc("/create-user/",controllers.CreateUser).Methods(http.MethodPost)
+	api.HandleFunc("/chat-room/",controllers.CreateChatRoom).Methods(http.MethodPost)
+	api.HandleFunc("/message/",controllers.PostMessage).Methods(http.MethodPost)
+
+	//GET
+	api.HandleFunc("/message-chat-room/",controllers.GetMessagesChatRoom).Methods(http.MethodGet)
+	api.HandleFunc("/conversation-card/",controllers.CardConversation).Methods(http.MethodGet)
+
+	//PATCH
+	api.HandleFunc("/update-read-message/",controllers.UpdateMessagesRead).Methods(http.MethodPatch)
 }
 
 	
