@@ -8,5 +8,7 @@ import (
 )
 
 func CardConversation(w http.ResponseWriter,r *http.Request){
-	
+	log.Println( "======= Card Conversation ")
+	conn := db.Connect()
+	defer conn.Close()
 }
