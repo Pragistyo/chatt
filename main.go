@@ -33,7 +33,7 @@ func main(){
 	//PATCH
 	api.HandleFunc("/update-read-message/",controllers.UpdateMessagesRead).Methods(http.MethodPatch)
 
-	PORT := ":9090"| os.Getenv( "PORT" )
+	PORT := os.Getenv( "PORT" )
 	log.Fatal(http.ListenAndServe(PORT, r))
 }
 
