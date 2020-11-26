@@ -27,7 +27,7 @@ func main(){
 	api.HandleFunc("/message/",controllers.PostMessage).Methods(http.MethodPost)
 
 	//GET
-	api.HandleFunc("/message-chat-room/{chat_room_name}/",controllers.GetMessagesChatRoom).Methods(http.MethodGet)
+	api.HandleFunc("/message-chat-room/",controllers.GetMessagesChatRoom).Methods(http.MethodPost)
 	api.HandleFunc("/conversation-card/",controllers.CardConversation).Methods(http.MethodGet)
 
 	//PATCH
