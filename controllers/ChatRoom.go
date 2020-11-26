@@ -15,11 +15,12 @@ func CreateChatRoom(w http.ResponseWriter,r *http.Request){
 	conn := db.Connect()
 	defer conn.Close()
 	
-	err := r.ParseMultipartForm(4096) // max memory 4mb
+	err := r.ParseMultipartForm(64) // max memory 64kb
 	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte  ("error parse input"))
 	}
-
+	
 	var user_id string = r.FormValue("user_id")
 	var oppose_user_id string = r.FormValue("oppose_id")
 	var user_email string = r.FormValue("user_email")
