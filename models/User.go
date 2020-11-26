@@ -11,14 +11,6 @@ type User struct {
 	Name	string    		  		`json:"name"` 
 }
 
-type ResponseSingleUser struct {
-	Message		string				`json:"message"` 
-	Status		int32				`json:"status"` 
-	Users		User				`json:"Users"` 
-}
 
-type ResponseMultiUser struct {
-	Message		string				`json:"message"` 
-	Status		int32				`json:"status"` 
-	Users		[]User				`json:"Users"` 
-}
+
+
