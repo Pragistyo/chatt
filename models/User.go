@@ -6,7 +6,19 @@ import(
 )
 
 type User struct {	
-	Id  		int32   		 	 `json:"id"` //,omitempty
-	Email 	string    		 	 	`json:"Email"` //,omitempty
-	Name	string    		  		`json:"Name"` //,omitempty
+	Id  	int32   		 	 	`json:"id"` 
+	Email 	string    		 	 	`json:"email"` 
+	Name	string    		  		`json:"name"` 
+}
+
+type ResponseSingleUser struct {
+	Message		string				`json:"message"` 
+	Status		int32				`json:"status"` 
+	Users		User				`json:"Users"` 
+}
+
+type ResponseMultiUser struct {
+	Message		string				`json:"message"` 
+	Status		int32				`json:"status"` 
+	Users		[]User				`json:"Users"` 
 }
