@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"os"
+	"log"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
