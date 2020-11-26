@@ -8,7 +8,9 @@ import (
 )
 
 func PostMessage(w http.ResponseWriter,r *http.Request){
-	
+	log.Println("======= post message")
+	conn := db.Connect()
+	defer conn.Close()
 }
 
 func GetMessagesChatRoom(w http.ResponseWriter,r *http.Request){

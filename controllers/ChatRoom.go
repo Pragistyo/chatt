@@ -8,5 +8,7 @@ import (
 )
 
 func CreateChatRoom(w http.ResponseWriter,r *http.Request){
-
+	log.Println( "======= Create Chat Room ")
+	conn := db.Connect()
+	defer conn.Close()
 }
