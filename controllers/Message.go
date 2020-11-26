@@ -13,11 +13,13 @@ import (
 	db "github.com/Pragistyo/chatt/db"
 	"github.com/Pragistyo/chatt/models"
 	"github.com/gorilla/mux"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 type ResponseMessages struct {
 	Message		string					`json:"message"` 
 	Status		int32					`json:"status"` 
-	Data		models.Message				`json:"Users"` 
+	UpdatedRead int64					`json:"updated_read_count"`
+	Data		[]models.Message		`json:"Users"` 
 }
 
 func Huba(w http.ResponseWriter, r *http.Request){
@@ -70,12 +72,18 @@ func GetMessagesChatRoom(w http.ResponseWriter,r *http.Request){ // array, plura
 	log.Println("Hello")
 	params := mux.Vars(r)
 	chat_room_name := params["chat_room_name"]
+	opposite_user_id := params["opposite_user_id"]
+	log.Println("====== chat_room_name =======", chat_room_name)
+	log.Println("====== opposite_user_id =======", opposite_user_id)
 
 	conn := db.Connect();
 	defer conn.Close()
 
 	var msg  models.Message
 	var arr_msg []models.Message
+	var countMsgRead int64
+
+	countMsgRead = UpdateMessagesRead(conn, chat_room_name, opposite_user_id)
 
 	var query string = "SELECT * FROM Message WHERE chat_room_name=$1 ORDER BY sent_time ASC"
 	rows, err := conn.Query( context.Background(), query,   chat_room_name)
@@ -85,49 +93,68 @@ func GetMessagesChatRoom(w http.ResponseWriter,r *http.Request){ // array, plura
 		w.WriteHeader(http.StatusBadRequest)
 		w.Header().Set("Content-Type", "application/json")
 			respString, _ := json.Marshal(
-				Response{ "Message": "Error retrieve data message", "Status": 400 } )
+				Response{ "Message": "Error retrieve data message", "Status": 400, "error":err } )
 		w.Write([]byte  (respString))
 	   	return
 	}
 
 	defer rows.Close()
-	count := 0
 	for rows.Next() {
 		if err := rows.Scan(&msg.Id, &msg.Message, & msg.SentTime, &msg.ReadTime,  &msg.UserId, &msg.ChatRoomName )
 		err != nil {
 			log.Println("Error Scan Messages list: ===> ",err.Error())
-			 if count == 0 {
-				w.WriteHeader(http.StatusNotFound)
-				w.Header().Set("Content-Type", "application/json")
-					respString, _ := json.Marshal(
-						Response{ "Message": "No message yet", "Status": 404, "error": err } )
-			 }else{
-				w.WriteHeader(http.StatusNotFound)
-				w.Header().Set("Content-Type", "application/json")
-					respString, _ := json.Marshal(
-						Response{ "Message": "Error Scan Data", "Status": 400, "error": err } )
-			 }
+			w.WriteHeader(http.StatusNotFound)
+			w.Header().Set("Content-Type", "application/json")
+				respString, _ := json.Marshal(
+					Response{ "Message": "Error Scan Data", "Status": 400, "error": err } )
+			w.Write([]byte  (respString))
+			 
 			return
 		} else {
 			arr_msg = append(arr_msg, msg)
-			count += 1 
 		}
+	}
+
+	if len(arr_msg) == 0 {
+		w.WriteHeader(http.StatusNotFound)
+			var respMsg ResponseMessages
+			respMsg.Message = "No Message Yet"
+			respMsg.Status = 404
+			respMsg.Data = arr_msg
+			respMsg.UpdatedRead = countMsgRead
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(respMsg)
+		return 
 	}
 
 	var respMsg ResponseMessages
 	respMsg.Message = "success get messages"
 	respMsg.Status = 200
-	respMsg.Data = msg
+	respMsg.Data = arr_msg
+	respMsg.UpdatedRead = countMsgRead
 
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(respMsg)
-
-	
+	return
 }
 
 
-func UpdateMessagesRead(w http.ResponseWriter,r *http.Request){
+func UpdateMessagesRead(conn *pgxpool.Pool, chat_room_name string, opposite_user_id string) int64 {
 	log.Println("updatesMessage")
-	return
+	var rowsAffected int64
+
+	var sqlStatement string=`
+	UPDATE Message 
+	SET read_time =$1
+	WHERE chat_room_name = $2 AND user_id = $3
+	`
+	log.Println("====== hello ====== ", opposite_user_id)
+	resUpd, err := conn.Exec(context.Background(), sqlStatement, time.Now(), chat_room_name, opposite_user_id)
+	if err!= nil {
+		log.Println(" ===== Error update read message =====: ", err)
+		return 0
+	}
+	rowsAffected = resUpd.RowsAffected()
+	return rowsAffected
 }
