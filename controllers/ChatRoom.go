@@ -28,13 +28,8 @@ func CreateChatRoom(w http.ResponseWriter,r *http.Request){
 
 
 	sqlStatement = `
-<<<<<<< Updated upstream
 	`
 	
-
-=======
-	`	
->>>>>>> Stashed changes
 
 
 }
