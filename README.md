@@ -32,10 +32,12 @@ $ go get
 
 ### Input your environtment variable
 open your .env file on
+
     - root folder
     - root/migrations
 
 change 
+
     - your_db_name
     - your_db_password
     - your_db_host
@@ -92,7 +94,7 @@ Example Request Body 1:
     | Request Body (Multipart Form)     |            VALUE            | 
     | --------------------------------- | ----------------------------|
     | email                             |  Mourinho@TottenhamFC.co.uk |
-    | name                              | Jose Mourinho               |
+    | name                              |  Jose Mourinho              |
 
 Example Request Body 2:
 
@@ -171,17 +173,17 @@ Example Request Body 1:
 
     | Request Body (Multipart Form)   |                        VALUE                        | 
     | ------------------------------- | ----------------------------------------------------|
-    | message                         |                       8                             |
+    | message                         | Not Really a good day in champions league though    |
     | chat_room_name                  | Mourinho@TottenhamFC.co.uk-Klopp@LiverpoolFC.co.uk  |
-    | user_post_id                    | Not Really a good day in champions league though    |
+    | user_post_id                    |                          8                          |
 
 Example Request Body 2:
 
     | Request Body (Multipart Form)   |                       VALUE                         | 
     | ------------------------------- | ----------------------------------------------------|
-    | message                         |                        13                           |
+    | message                         | It is a good day in european league                 |
     | chat_room_name                  | Mourinho@TottenhamFC.co.uk-Klopp@LiverpoolFC.co.uk  |
-    | user_post_id                    | It is a good day in european league                 |
+    | user_post_id                    |                         13                          |
 
 Example of Response if Success :
 ```yaml
