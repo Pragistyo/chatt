@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"context"
 	"encoding/json"
+	"regexp"
 	db "github.com/Pragistyo/chatt/db"
 	models "github.com/Pragistyo/chatt/models"
 )
@@ -66,11 +67,19 @@ func CreateUser(w http.ResponseWriter,r *http.Request){
 		panic(err)
 	}
 
+	
 	var name string = r.FormValue("name")
 	var email string = r.FormValue("email")
 	var user_id int32
 
 	//email validation
+	if !isEmailValid(email) {
+		log.Println("not a valid email")
+		w.WriteHeader(http.StatusBadRequest)
+		respString, _ := json.Marshal( Response{ "Message": "Email not valid", "Status": 400, "error": err } )
+		w.Write([]byte  (respString))
+		return
+	}
 
 	var sqlStatement string = `
 					INSERT INTO UserChat (name, email)
@@ -92,4 +101,12 @@ func CreateUser(w http.ResponseWriter,r *http.Request){
 	respString, _ := json.Marshal(Response{"Message": "user created", "status": 401, "new_id":user_id })
 	w.Write([]byte  (respString))
 	return
+}
+
+func isEmailValid(email string) bool {
+	var emailRegex = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+	if len(email) < 3 && len(email) > 254 {
+		return false
+	}
+	return emailRegex.MatchString(email)
 }
