@@ -22,7 +22,7 @@ type ConversationCardRaw struct {
 	Name1							string
 	Name2							string
 	Msg								sql.NullString
-	Not_read_count					int64
+	Not_read_count					sql.NullInt64
 	date_sent						sql.NullTime
 	User_last_message_id			sql.NullInt32
 }
@@ -101,14 +101,8 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 			}
 			cardConvObj.LastMsg = rawConvCard.Msg
 			cardConvObj.UnreadCount = rawConvCard.Not_read_count
-
 			arr_cardConvObj = append(arr_cardConvObj, cardConvObj)
 
-			// kalau rawConvCard.user_id_1 == user_id 
-					// maka cardConvObj.Name = name1
-			// kalau rawConvCard.user_id_2 == user_id 
-					// maka cardConvObj.Name = name2
-			// arr_rawConvCard = append(arr_msg, msg)
 		}
 	}
 	if len(arr_cardConvObj) == 0 {
