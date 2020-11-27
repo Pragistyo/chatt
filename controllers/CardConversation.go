@@ -28,10 +28,11 @@ type ConversationCardRaw struct {
 }
 
 type ConversationCard struct {
-	Id          int32        		`json:"id"`
-	Name        string       	 	`json:"name"`
-	UnreadCount sql.NullInt64 		`json:"unread_count"`
-	LastMsg     sql.NullString      `json:"last_msg"`
+	Id          	int32        		`json:"id"`
+	Name        	string       	 	`json:"name"`
+	ChatRoomName 	string				`json:"chat_room_name"`
+	UnreadCount 	sql.NullInt64 		`json:"unread_count"`
+	LastMsg     	sql.NullString      `json:"last_msg"`
 }
 
 type ResponseConvCard struct {
@@ -91,7 +92,7 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 		} else {
 			var cardConvObj ConversationCard
 			log.Println(" ========= here raw conversation card ===========")
-			log.Println(rawConvCard.Not_read_count)
+			// log.Println(rawConvCard.Not_read_count)
 			if rawConvCard.User_id_1 == user_id{
 				cardConvObj.Name = rawConvCard.Name2
 				cardConvObj.Id = rawConvCard.User_id_2
@@ -101,8 +102,8 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 			}
 			cardConvObj.LastMsg = rawConvCard.Msg
 			cardConvObj.UnreadCount = rawConvCard.Not_read_count
+			cardConvObj.ChatRoomName = rawConvCard.Chat_room_name
 			arr_cardConvObj = append(arr_cardConvObj, cardConvObj)
-
 		}
 	}
 	if len(arr_cardConvObj) == 0 {
