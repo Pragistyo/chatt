@@ -6,7 +6,8 @@ This app not include web-socket, only rest api logic \
 This default app run on port 9091
 
 # How to try This app
-install GO on your machine. Download Go and installation procedure -> [installGO](https://golang.org/doc/install)
+Install GO on your machine. \
+Download Go and installation procedure -> [installGO](https://golang.org/doc/install)
 
 ## Clone this app
   using ssh 
@@ -331,12 +332,3 @@ Example of Response if success:
   ]
 }
 ```
-
-
-
-
-
-
-    [installGO]: <https://golang.org/doc/install>
-    [download_postman]: <https://www.postman.com/downloads/>
-    [download_insomnia]: <https://insomnia.rest/download/>
