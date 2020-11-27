@@ -38,7 +38,7 @@ type ConversationCard struct {
 type ResponseConvCard struct {
 	Message		string					`json:"message"` 
 	Status		int32					`json:"status"` 
-	Data		[]ConversationCard		`json:"Users"` 
+	Data		[]ConversationCard		`json:"Data"` 
 }
 
 func CardConversation(w http.ResponseWriter,r *http.Request){
