@@ -3,25 +3,23 @@
 Back-end simple chatt app usign GO and postgreSQL \
 This app using gorilla/mux as router and pgx as postgreSQL driver \
 This app not include web-socket, only rest api logic \
-This default app run on port 9091 \
+This default app run on port 9091
 
 # How to use This app
 install GO on your machine. Download Go and installation procedure -> ( [installGO] )
 
 ## Clone this app
-    using ssh 
-
+  using ssh 
 ```
 git clone git@github.com:Pragistyo/chatt.git
 ```
-    using https
+  using https
 
 ```
 git clone https://github.com/Pragistyo/chatt.git
 ```
 ## Install Dependencies
-    from terminal on this project root folder, run command:
-
+  from terminal on this project root folder, run command:
 ```sh
 $ go get
 ```
@@ -33,30 +31,28 @@ $ go get
   - In root/migrations folder change file .envs to .env
 
 ### Input your environtment variable
+open your .env file on
+    - root folder
+    - root/migrations
 
-    open your .env file on
-        - root folder
-        - root/migrations
-    change 
-        - your_db_name
-        - your_db_password
-        - your_db_host
-        - your_db_port
-    to your own credential
+change 
+    - your_db_name
+    - your_db_password
+    - your_db_host
+    - your_db_port
+
+to your own credential
 
 ### Recommendation 
     use your cloud postgreSQL db
 
 ## DO MIGRATIONS TABLE
-
-    from terminal on this project root folder, run command:
-
+  from terminal on this project root folder, run command:
 ```sh
 $ cd migrations
 $ go run migrations.go
 ```
-    then back to your root folder (hope no error happen :D )
-
+  then back to your root folder (hope no error happen :D )
 ```
 $ cd ..
 ```
@@ -69,7 +65,7 @@ $ go run main.go
 
 ## ROUTES
 
-#### User Routes
+#### go-chat Routes
 
 | Route                                                                     |  HTTP | Description |
 | ------------------------------------------------------------------------- |------ | --------------|
@@ -83,7 +79,7 @@ $ go run main.go
 
 ## USING ROUTES FROM RESTFULL DEVELOPMENT TOOL (POST MAN/ INSOMNIA/ etc)
  - [download_insomnia]
- - [download_postman]
+ - [download_postman] \
  This App input only from Request body type: Multipart From Data
 
 ### 1. CREATE USER
@@ -93,17 +89,17 @@ $ go run main.go
     
 Example Request Body 1:
 
-    | Request Body (Multipart Form)     | VALUE  | 
-    | --------------------------------- | ------ |
+    | Request Body (Multipart Form)     |            VALUE            | 
+    | --------------------------------- | ----------------------------|
     | email                             |  Mourinho@TottenhamFC.co.uk |
-    | name                              | Jose Mourinho   |
+    | name                              | Jose Mourinho               |
 
 Example Request Body 2:
 
-    | Request Body (Multipart Form)     | VALUE  | 
-    | --------------------------------- | ------ |
+    | Request Body (Multipart Form)     |        VALUE            | 
+    | --------------------------------- | ------------------------|
     | email                             | Klopp@LiverpoolFC.co.uk |
-    | name                              | Jurgen Klopp   |
+    | name                              | Jurgen Klopp            |
 
 Example of Response if Success:
 ```yaml
@@ -121,8 +117,8 @@ Example of Response if Success:
 
 Example Request Body 1:
 
-    | Request Body (Multipart Form)     | VALUE  | 
-    | --------------------------------- | ------ |
+    | Request Body (Multipart Form)     |          VALUE              | 
+    | --------------------------------- | --------------------------- |
     | email                             |  Mourinho@TottenhamFC.co.uk |
 
 Example of Response if Success :
@@ -144,12 +140,12 @@ Example of Response if Success :
 
 Example Request Body 1:
 
-    | Request Body (Multipart Form)     | VALUE  | 
-    | --------------------------------- | ------ |
-    | user_id                           | 13 |
-    | oppose_user_id                    | 8  |
+    | Request Body (Multipart Form)     |          VALUE             | 
+    | --------------------------------- | ---------------------------|
+    | user_id                           |             13             |
+    | oppose_user_id                    |              8             |
     | user_email                        | Mourinho@TottenhamFC.co.uk |
-    | oppose_user_email                 | Klopp@LiverpoolFC.co.uk   |
+    | oppose_user_email                 | Klopp@LiverpoolFC.co.uk    |
 
 Example of Response if Success :
 ```yaml
@@ -173,19 +169,19 @@ Body Type: multipart Form Data
 
 Example Request Body 1:
 
-    | Request Body (Multipart Form)   | VALUE  | 
-    | ------------------------------- | ------ |
-    | message                         | 8 |
+    | Request Body (Multipart Form)   |                        VALUE                        | 
+    | ------------------------------- | ----------------------------------------------------|
+    | message                         |                       8                             |
     | chat_room_name                  | Mourinho@TottenhamFC.co.uk-Klopp@LiverpoolFC.co.uk  |
-    | user_post_id                    | Not Really a good day in champions league though |
+    | user_post_id                    | Not Really a good day in champions league though    |
 
 Example Request Body 2:
 
-    | Request Body (Multipart Form)   | VALUE  | 
-    | ------------------------------- | ------ |
-    | message                         | 13 |
+    | Request Body (Multipart Form)   |                       VALUE                         | 
+    | ------------------------------- | ----------------------------------------------------|
+    | message                         |                        13                           |
     | chat_room_name                  | Mourinho@TottenhamFC.co.uk-Klopp@LiverpoolFC.co.uk  |
-    | user_post_id                    | It is a good day in european league |
+    | user_post_id                    | It is a good day in european league                 |
 
 Example of Response if Success :
 ```yaml
