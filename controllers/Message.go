@@ -59,7 +59,7 @@ func PostMessage(w http.ResponseWriter,r *http.Request){
 	   return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	respString, _ := json.Marshal( 
 		Response{ "Message": "success post message", "Status": 201, "id_message": id } )
