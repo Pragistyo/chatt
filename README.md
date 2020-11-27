@@ -5,8 +5,8 @@ This app using gorilla/mux as router and pgx as postgreSQL driver \
 This app not include web-socket, only rest api logic \
 This default app run on port 9091
 
-# How to use This app
-install GO on your machine. Download Go and installation procedure -> ( [installGO] )
+# How to try This app
+install GO on your machine. Download Go and installation procedure -> [installGO](https://golang.org/doc/install)
 
 ## Clone this app
   using ssh 
@@ -80,8 +80,8 @@ $ go run main.go
 
 
 ## USING ROUTES FROM RESTFULL DEVELOPMENT TOOL (POST MAN/ INSOMNIA/ etc)
- - [download_insomnia]
- - [download_postman] \
+ - [download_insomnia](https://www.postman.com/downloads/)
+ - [download_postman](https://insomnia.rest/download/) \
  This App input only from Request body type: Multipart From Data
 
 ### 1. CREATE USER
