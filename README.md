@@ -1,23 +1,27 @@
 # chatt
-Back-end simple chatt app usign GO and postgreSQL
-This app using gorilla/mux as router and pgx as postgreSQL driver
-This app not include web-socket, only rest api logic
-This default app run on port 9091
+
+Back-end simple chatt app usign GO and postgreSQL \
+This app using gorilla/mux as router and pgx as postgreSQL driver \
+This app not include web-socket, only rest api logic \
+This default app run on port 9091 \
 
 # How to use This app
 install GO on your machine. Download Go and installation procedure -> ( [installGO] )
 
 ## Clone this app
     using ssh 
+
 ```
 git clone git@github.com:Pragistyo/chatt.git
 ```
     using https
+
 ```
 git clone https://github.com/Pragistyo/chatt.git
 ```
 ## Install Dependencies
     from terminal on this project root folder, run command:
+
 ```sh
 $ go get
 ```
@@ -29,6 +33,7 @@ $ go get
   - In root/migrations folder change file .envs to .env
 
 ### Input your environtment variable
+
     open your .env file on
         - root folder
         - root/migrations
@@ -37,20 +42,21 @@ $ go get
         - your_db_password
         - your_db_host
         - your_db_port
+    to your own credential
 
 ### Recommendation 
     use your cloud postgreSQL db
 
-
-
 ## DO MIGRATIONS TABLE
 
     from terminal on this project root folder, run command:
+
 ```sh
 $ cd migrations
 $ go run migrations.go
 ```
     then back to your root folder (hope no error happen :D )
+
 ```
 $ cd ..
 ```
@@ -80,7 +86,7 @@ $ go run main.go
  - [download_postman]
  This App input only from Request body type: Multipart From Data
 
-### CREATE USER
+### 1. CREATE USER
     url: localhost:9091/go-chat/api/v1/create-user/
     method: POST
     Body Type: multipart Form Data
@@ -108,7 +114,7 @@ Example of Response if Success:
 }
 ```
 
-### LOGIN    
+### 2. LOGIN    
     url: localhost:9091/go-chat/api/v1/login/
     method: POST
     Body Type: multipart Form Data
@@ -131,7 +137,7 @@ Example of Response if Success :
 }
 ```
 
-### CREATE CHAT ROOM
+### 3. CREATE CHAT ROOM
     url: localhost:9091/go-chat/api/v1/chat-room/ 
     method: POST 
     Body Type: multipart Form Data
@@ -160,7 +166,7 @@ Response if duplicate room:
   "Status": 400,
 }
 ```
-### POST MESSAGE 
+### 4. POST MESSAGE 
 url: localhost:9091/go-chat/api/v1/message/
 method: POST
 Body Type: multipart Form Data
@@ -189,7 +195,7 @@ Example of Response if Success :
   "id_message": 11
 }
 ```
-### GET MESSAGE CHAT ROOM 
+### 5. GET MESSAGE CHAT ROOM 
 This api for user to retrieve all message in chat room which each of them registered. \
 This end point will mark all unread opposite message whom user has conversation with as read
 
@@ -269,7 +275,7 @@ Example of Response if Success :
 }
 ```
 
-### GET LIST CONVERSATION CARD WHICH USER HAVE
+### 6. GET LIST CONVERSATION CARD WHICH USER HAVE
 url:
 ```
 localhost:9091/go-chat/api/v1/conversation-card/{user_id}/
