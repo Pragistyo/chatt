@@ -1,22 +1,23 @@
 # chatt
 Back-end simple chatt app usign GO and postgreSQL
 This app using gorilla/mux as router and pgx as postgreSQL driver
+This app not include web-socket, only rest api logic
 This default app run on port 9091
 
 # How to use This app
 install GO on your machine. Download Go and installation procedure -> ( [installGO] )
 
 ## Clone this app
-using ssh 
+    using ssh 
 ```
 git clone git@github.com:Pragistyo/chatt.git
 ```
-using https
+    using https
 ```
 git clone https://github.com/Pragistyo/chatt.git
 ```
 ## Install Dependencies
-from terminal on this project root folder, run command:
+    from terminal on this project root folder, run command:
 ```sh
 $ go get
 ```
@@ -28,18 +29,28 @@ $ go get
   - In root/migrations folder change file .envs to .env
 
 ### Input your environtment variable
-change your_db_name, your_db_password, your_db_host, your_db_port to your own
+    open your .env file on
+        - root folder
+        - root/migrations
+    change 
+        - your_db_name
+        - your_db_password
+        - your_db_host
+        - your_db_port
 
 ### Recommendation 
-use your cloud postgreSQL db
+    use your cloud postgreSQL db
+
+
 
 ## DO MIGRATIONS TABLE
-from terminal on this project root folder, run command:
+
+    from terminal on this project root folder, run command:
 ```sh
 $ cd migrations
 $ go run migrations.go
 ```
-then back to your root folder (hope no error happen :D )
+    then back to your root folder (hope no error happen :D )
 ```
 $ cd ..
 ```
@@ -63,23 +74,26 @@ $ go run main.go
 | `/go-chat/api/v1/message-chat-room/{chat_room_name}/{opposite_user_id}/`  | GET   | User get his message, based on chat_room_name and opposite user_id. Users read all unread messages in conversation
 | `/go-chat/api/v1//conversation-card/`                                     | GET   | Get List of users conversation (opposite name, last msg, unread msg) with other user 
 
-## USING ROUTES FROM RESTFULL DEVELOPMENT TOOL (LIKE POST MAN, INSOMNIA)
+
+## USING ROUTES FROM RESTFULL DEVELOPMENT TOOL (POST MAN/ INSOMNIA/ etc)
  - [download_insomnia]
  - [download_postman]
  This App input only from Request body type: Multipart From Data
 
-### cREATE USER
+### CREATE USER
     url: localhost:9091/go-chat/api/v1/create-user/
     method: POST
     Body Type: multipart Form Data
     
 Example Request Body 1:
+
     | Request Body (Multipart Form)     | VALUE  | 
     | --------------------------------- | ------ |
     | email                             |  Mourinho@TottenhamFC.co.uk |
     | name                              | Jose Mourinho   |
 
 Example Request Body 2:
+
     | Request Body (Multipart Form)     | VALUE  | 
     | --------------------------------- | ------ |
     | email                             | Klopp@LiverpoolFC.co.uk |
@@ -100,6 +114,7 @@ Example of Response if Success:
     Body Type: multipart Form Data
 
 Example Request Body 1:
+
     | Request Body (Multipart Form)     | VALUE  | 
     | --------------------------------- | ------ |
     | email                             |  Mourinho@TottenhamFC.co.uk |
@@ -117,11 +132,12 @@ Example of Response if Success :
 ```
 
 ### CREATE CHAT ROOM
-url: localhost:9091/go-chat/api/v1/chat-room/
-method: POST
-Body Type: multipart Form Data
+    url: localhost:9091/go-chat/api/v1/chat-room/ 
+    method: POST 
+    Body Type: multipart Form Data
 
 Example Request Body 1:
+
     | Request Body (Multipart Form)     | VALUE  | 
     | --------------------------------- | ------ |
     | user_id                           | 13 |
@@ -150,6 +166,7 @@ method: POST
 Body Type: multipart Form Data
 
 Example Request Body 1:
+
     | Request Body (Multipart Form)   | VALUE  | 
     | ------------------------------- | ------ |
     | message                         | 8 |
@@ -157,6 +174,7 @@ Example Request Body 1:
     | user_post_id                    | Not Really a good day in champions league though |
 
 Example Request Body 2:
+
     | Request Body (Multipart Form)   | VALUE  | 
     | ------------------------------- | ------ |
     | message                         | 13 |
@@ -172,7 +190,7 @@ Example of Response if Success :
 }
 ```
 ### GET MESSAGE CHAT ROOM 
-This api for user to retrieve all message in chat room which each of them registered.
+This api for user to retrieve all message in chat room which each of them registered. \
 This end point will mark all unread opposite message whom user has conversation with as read
 
 url : 
@@ -186,7 +204,7 @@ localhost:9091/go-chat/api/v1/message-chat-room/Mourinho@TottenhamFC.co.uk-Klopp
 ```
 method: GET
 
-In example above it is described:
+In example above it is described: \
 params chat_room_name 
 ```
 Mourinho@TottenhamFC.co.uk-Klopp@LiverpoolFC.co.uk
