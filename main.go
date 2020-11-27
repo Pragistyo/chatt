@@ -28,8 +28,8 @@ func main(){
 
 	//GET
 	api.HandleFunc("/message-chat-room/{chat_room_name}/{opposite_user_id}",controllers.GetMessagesChatRoom).Methods(http.MethodGet)
-	// api.HandleFunc("/conversation-card/",controllers.CardConversation).Methods(http.MethodGet)
-
+	api.HandleFunc("/conversation-card/{user_id}/",controllers.CardConversation).Methods(http.MethodGet)
+	
 	// //PATCH
 	// api.HandleFunc("/update-read-message/{chat_room_name}/{user_id}/",controllers.UpdateMessagesRead).Methods(http.MethodPatch)
 

@@ -10,7 +10,7 @@ import (
 
 	db "github.com/Pragistyo/chatt/db"
 	"database/sql"
-	models "github.com/Pragistyo/chatt/models"
+	// models "github.com/Pragistyo/chatt/models"
 	"github.com/gorilla/mux"
 )
 
@@ -22,7 +22,7 @@ type ConversationCardRaw struct {
 	Name1							string
 	Name2							string
 	Msg								sql.NullString
-	Not_read_count					sql.NullInt64
+	Not_read_count					int64
 	date_sent						sql.NullTime
 	User_last_message_id			sql.NullInt32
 }
@@ -76,7 +76,7 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 	defer rows.Close()
 	for rows.Next() {
 		if err := rows.Scan(&rawConvCard.Distinct, &rawConvCard.Chat_room_name, & rawConvCard.User_id_1, 
-			&rawConvCard.User_id_2,  &rawConvCard.Name1, &rawConvCard.Name1,
+			&rawConvCard.User_id_2,  &rawConvCard.Name1, &rawConvCard.Name2,
 			&rawConvCard.Msg, &rawConvCard.Not_read_count, &rawConvCard.date_sent, 
 			&rawConvCard.User_last_message_id)
 		err != nil {
@@ -90,6 +90,8 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 			return
 		} else {
 			var cardConvObj ConversationCard
+			log.Println(" ========= here raw conversation card ===========")
+			log.Println(rawConvCard.Not_read_count)
 			if rawConvCard.User_id_1 == user_id{
 				cardConvObj.Name = rawConvCard.Name2
 				cardConvObj.Id = rawConvCard.User_id_2
