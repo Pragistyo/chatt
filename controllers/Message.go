@@ -103,7 +103,7 @@ func GetMessagesChatRoom(w http.ResponseWriter,r *http.Request){ // array, plura
 		if err := rows.Scan(&msg.Id, &msg.Message, & msg.SentTime, &msg.ReadTime,  &msg.UserId, &msg.ChatRoomName )
 		err != nil {
 			log.Println("Error Scan Messages list: ===> ",err.Error())
-			w.WriteHeader(http.StatusNotFound)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Header().Set("Content-Type", "application/json")
 				respString, _ := json.Marshal(
 					Response{ "Message": "Error Scan Data", "Status": 400, "error": err } )
@@ -113,6 +113,13 @@ func GetMessagesChatRoom(w http.ResponseWriter,r *http.Request){ // array, plura
 		} else {
 			arr_msg = append(arr_msg, msg)
 		}
+	}
+	err = rows.Err()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte  ("error iteration"))
+		log.Println("==== Error iteration ====== ",err)
+		return
 	}
 
 	if len(arr_msg) == 0 {
