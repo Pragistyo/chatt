@@ -32,12 +32,11 @@ $ go get
   - In root/migrations folder change file .envs to .env
 
 ### Input your environtment variable
-
-  #open your .env file on
+    #open your .env file on
     - root folder
     - root/migrations
 
-  #change 
+    #change 
     - your_db_name
     - your_db_password
     - your_db_host
