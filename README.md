@@ -166,9 +166,9 @@ Response if duplicate room:
 }
 ```
 ### 4. POST MESSAGE 
-url: localhost:9091/go-chat/api/v1/message/
-method: POST
-Body Type: multipart Form Data
+    url: localhost:9091/go-chat/api/v1/message/
+    method: POST
+    Body Type: multipart Form Data
 
 Example Request Body 1:
 
