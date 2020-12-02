@@ -1,44 +1,45 @@
 package controllers
 
-
 import (
-	"log"
-	"net/http"
 	"context"
 	"encoding/json"
+	"log"
+	"net/http"
+	"reflect"
 	"strconv"
 
+	// "database/sql"
+
 	db "github.com/Pragistyo/chatt/db"
-	"database/sql"
-	// models "github.com/Pragistyo/chatt/models"
+	models "github.com/Pragistyo/chatt/models"
 	"github.com/gorilla/mux"
 )
 
-type ConversationCardRaw struct { 
-	Distinct  		    			string   		           
-	Chat_room_name 		    		string   		         
-	User_id_1 						int32    		  
-	User_id_2						int32
-	Name1							string
-	Name2							string
-	Msg								sql.NullString
-	Not_read_count					sql.NullInt64
-	date_sent						sql.NullTime
-	User_last_message_id			sql.NullInt32
-}
+// type ConversationCardRaw struct { 
+// 	Distinct  		    			string   		           
+// 	Chat_room_name 		    		string   		         
+// 	User_id_1 						int32    		  
+// 	User_id_2						int32
+// 	Name1							string
+// 	Name2							string
+// 	Msg								sql.NullString
+// 	Not_read_count					sql.NullInt64
+// 	date_sent						sql.NullTime
+// 	User_last_message_id			sql.NullInt32
+// }
 
-type ConversationCard struct {
-	Id          	int32        		`json:"id"`
-	Name        	string       	 	`json:"name"`
-	ChatRoomName 	string				`json:"chat_room_name"`
-	UnreadCount 	sql.NullInt64 		`json:"unread_count"`
-	LastMsg     	sql.NullString      `json:"last_msg"`
-}
+// type ConversationCard struct {
+// 	Id          	int32        		`json:"id"`
+// 	Name        	string       	 	`json:"name"`
+// 	ChatRoomName 	string				`json:"chat_room_name"`
+// 	UnreadCount 	sql.NullInt64 		`json:"unread_count"`
+// 	LastMsg     	sql.NullString      `json:"last_msg"`
+// }
 
 type ResponseConvCard struct {
 	Message		string					`json:"message"` 
 	Status		int32					`json:"status"` 
-	Data		[]ConversationCard		`json:"Data"` 
+	Data		[]models.ConversationCard		`json:"Data"` 
 }
 
 func CardConversation(w http.ResponseWriter,r *http.Request){
@@ -53,13 +54,16 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 		w.Write([]byte  (" error parsing params "))
 	}
 	user_id := int32(i)
-
+	models.GetConvListDB(user_id)
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write([]byte  (" trying models "))
+	return
 
 	conn := db.Connect()
 	defer conn.Close()
 
-	var rawConvCard ConversationCardRaw
-	var arr_cardConvObj []ConversationCard
+	var rawConvCard models.ConversationCardRaw
+	var arr_cardConvObj []models.ConversationCard
 
 	var getQueryCardConv string = getQueryCardConv()
 	rows, err := conn.Query( context.Background(), getQueryCardConv,   user_id)
@@ -73,7 +77,8 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 		w.Write([]byte  (respString))
 	   	return
 	}
-
+	log.Println("=============== here rows: ", rows)
+	log.Println( reflect.TypeOf( rows ))
 	defer rows.Close()
 	for rows.Next() {
 		if err := rows.Scan(&rawConvCard.Distinct, &rawConvCard.Chat_room_name, & rawConvCard.User_id_1, 
@@ -90,9 +95,8 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 			 
 			return
 		} else {
-			var cardConvObj ConversationCard
+			var cardConvObj models.ConversationCard
 			log.Println(" ========= here raw conversation card ===========")
-			// log.Println(rawConvCard.Not_read_count)
 			if rawConvCard.User_id_1 == user_id{
 				cardConvObj.Name = rawConvCard.Name2
 				cardConvObj.Id = rawConvCard.User_id_2
