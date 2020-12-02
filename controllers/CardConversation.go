@@ -8,33 +8,11 @@ import (
 	"reflect"
 	"strconv"
 
-	"database/sql"
-
 	db "chatt/db"
 	models "chatt/models"
 	"github.com/gorilla/mux"
 )
 
-type ConversationCardRaw struct { 
-	Distinct  		    			string   		           
-	Chat_room_name 		    		string   		         
-	User_id_1 						int32    		  
-	User_id_2						int32
-	Name1							string
-	Name2							string
-	Msg								sql.NullString
-	Not_read_count					sql.NullInt64
-	date_sent						sql.NullTime
-	User_last_message_id			sql.NullInt32
-}
-
-// type ConversationCard struct {
-// 	Id          	int32        		`json:"id"`
-// 	Name        	string       	 	`json:"name"`
-// 	ChatRoomName 	string				`json:"chat_room_name"`
-// 	UnreadCount 	sql.NullInt64 		`json:"unread_count"`
-// 	LastMsg     	sql.NullString      `json:"last_msg"`
-// }
 
 type ResponseConvCard struct {
 	Message		string					`json:"message"` 
@@ -54,15 +32,11 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 		w.Write([]byte  (" error parsing params "))
 	}
 	user_id := int32(i)
-	models.GetConvListDB(user_id)
-	w.WriteHeader(http.StatusBadRequest)
-	w.Write([]byte  (" trying models "))
-	return
 
 	conn := db.Connect()
 	defer conn.Close()
 
-	var rawConvCard ConversationCardRaw
+	var rawConvCard models.ConversationCardRaw
 	var arr_cardConvObj []models.ConversationCard
 
 	var getQueryCardConv string = getQueryCardConv()
@@ -83,17 +57,18 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 	for rows.Next() {
 		if err := rows.Scan(&rawConvCard.Distinct, &rawConvCard.Chat_room_name, & rawConvCard.User_id_1, 
 			&rawConvCard.User_id_2,  &rawConvCard.Name1, &rawConvCard.Name2,
-			&rawConvCard.Msg, &rawConvCard.Not_read_count, &rawConvCard.date_sent, 
+			&rawConvCard.Msg, &rawConvCard.Not_read_count, &rawConvCard.Date_sent, 
 			&rawConvCard.User_last_message_id)
 		err != nil {
+
 			log.Println("Error Scan Messages list: ===> ",err.Error())
 			w.WriteHeader(http.StatusBadRequest)
 			w.Header().Set("Content-Type", "application/json")
 				respString, _ := json.Marshal(
 					Response{ "Message": "Error Scan Data", "Status": 400, "error": err } )
-			w.Write([]byte  (respString))
-			 
+			w.Write([]byte  (respString))	 
 			return
+
 		} else {
 			var cardConvObj models.ConversationCard
 			log.Println(" ========= here raw conversation card ===========")
