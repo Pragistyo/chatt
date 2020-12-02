@@ -34,7 +34,7 @@ func CreateChatRoom(w http.ResponseWriter,r *http.Request){
 	possibleName[0] = chat_room_name_1
 	possibleName[1] = chat_room_name_2
 	
-	log.Println("============bom bon")
+	log.Println("validation chat room")
 	// validation
 	if !checkChatRoomExist( possibleName){
 		w.WriteHeader(http.StatusBadRequest)
@@ -89,7 +89,9 @@ func checkChatRoomExist( possibleName [2]string) bool {
 		log.Println(" should be not found 0 = true", err)
 		flag = true
 	}else if err == nil {
+		//tidak ada error not found, berarti duplicate
 		flag = false
+		return flag
 	}
 
 
@@ -105,7 +107,7 @@ func checkChatRoomExist( possibleName [2]string) bool {
 	}else if err == nil {
 		flag = false
 	}
-	
+
 
 	//row exist
 	return flag
