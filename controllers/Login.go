@@ -12,12 +12,6 @@ import (
 )
 
 // type Response map[string]interface{}
-type ResponseSingleUser struct {
-	Message		string					`json:"message"` 
-	Status		int32					`json:"status"` 
-	Data		models.User				`json:"Users"` 
-}
-
 
 func Login(w http.ResponseWriter,r *http.Request){
 	
@@ -47,7 +41,7 @@ func Login(w http.ResponseWriter,r *http.Request){
 		return
 	}
 
-	var resp ResponseSingleUser
+	var resp models.ResponseSingleUser
 	resp.Message = "success"
 	resp.Status = 200
 	resp.Data = u

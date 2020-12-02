@@ -22,12 +22,6 @@ type ResponseMessages struct {
 	Data		[]models.Message		`json:"Users"` 
 }
 
-func Huba(w http.ResponseWriter, r *http.Request){
-	log.Println("Hello")
-	return
-}
-
-
 func PostMessage(w http.ResponseWriter,r *http.Request){
 	conn := db.Connect()
 	defer conn.Close()
