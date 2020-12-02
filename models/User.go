@@ -12,9 +12,9 @@ type User struct {
 }
 
 type ResponseSingleUser struct {
-	Message		string					`json:"message"` 
-	Status		int32					`json:"status"` 
-	Data		User				`json:"Users"` 
+	Message		string				`json:"message"` 
+	Status		int32				`json:"status"` 
+	Data		User				`json:"Data"` 
 }
 
 type ResponseMultiUser struct {
