@@ -101,6 +101,7 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 	respMsg.Status = 200
 	respMsg.Data = arr_cardConvObj
 
+	log.Println(reflect.TypeOf(http.StatusOK))
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(respMsg)

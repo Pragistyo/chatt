@@ -7,6 +7,7 @@ import (
 	"context"
 	"encoding/json"
 	"regexp"
+	"fmt"
 	db "chatt/db"
 	models "chatt/models"
 )
@@ -35,9 +36,7 @@ func Login(w http.ResponseWriter,r *http.Request){
 
 	if err!=nil {
 		log.Println(" ==== error login: ", err)
-		w.WriteHeader(http.StatusNotFound)
-		respString, _ := json.Marshal( Response{ "Message": "user not found ", "Status": 404 } )
-		w.Write([]byte  (respString))
+		ResponseError(w, "user not found ", 404, http.StatusNotFound, err)
 		return
 	}
 
@@ -69,9 +68,7 @@ func CreateUser(w http.ResponseWriter,r *http.Request){
 	//email validation
 	if !isEmailValid(email) {
 		log.Println("not a valid email")
-		w.WriteHeader(http.StatusBadRequest)
-		respString, _ := json.Marshal( Response{ "Message": "Email not valid", "Status": 400, "error": err } )
-		w.Write([]byte  (respString))
+		ResponseError(w, "Email not valid", 400, http.StatusBadRequest, fmt.Errorf( "email not valid") )
 		return
 	}
 
@@ -98,6 +95,7 @@ func CreateUser(w http.ResponseWriter,r *http.Request){
 }
 
 func isEmailValid(email string) bool {
+	log.Println("huahauhuahu")
 	var emailRegex = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 	if len(email) < 3 && len(email) > 254 {
 		return false
