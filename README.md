@@ -22,7 +22,7 @@ git clone https://github.com/Pragistyo/chatt.git
 ## Install Dependencies
   from terminal on this project root folder, run command:
 ```sh
-$ go get
+$ go get -u
 ```
 
 ## Setup Env
