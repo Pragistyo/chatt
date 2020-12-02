@@ -10,8 +10,8 @@ import (
 	// "reflect"
 	"context"
 
-	db "github.com/Pragistyo/chatt/db"
-	"github.com/Pragistyo/chatt/models"
+	db "chatt/db"
+	models "chatt/models"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 )

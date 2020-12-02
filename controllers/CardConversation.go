@@ -8,25 +8,25 @@ import (
 	"reflect"
 	"strconv"
 
-	// "database/sql"
+	"database/sql"
 
-	db "github.com/Pragistyo/chatt/db"
-	models "github.com/Pragistyo/chatt/models"
+	db "chatt/db"
+	models "chatt/models"
 	"github.com/gorilla/mux"
 )
 
-// type ConversationCardRaw struct { 
-// 	Distinct  		    			string   		           
-// 	Chat_room_name 		    		string   		         
-// 	User_id_1 						int32    		  
-// 	User_id_2						int32
-// 	Name1							string
-// 	Name2							string
-// 	Msg								sql.NullString
-// 	Not_read_count					sql.NullInt64
-// 	date_sent						sql.NullTime
-// 	User_last_message_id			sql.NullInt32
-// }
+type ConversationCardRaw struct { 
+	Distinct  		    			string   		           
+	Chat_room_name 		    		string   		         
+	User_id_1 						int32    		  
+	User_id_2						int32
+	Name1							string
+	Name2							string
+	Msg								sql.NullString
+	Not_read_count					sql.NullInt64
+	date_sent						sql.NullTime
+	User_last_message_id			sql.NullInt32
+}
 
 // type ConversationCard struct {
 // 	Id          	int32        		`json:"id"`
@@ -62,7 +62,7 @@ func CardConversation(w http.ResponseWriter,r *http.Request){
 	conn := db.Connect()
 	defer conn.Close()
 
-	var rawConvCard models.ConversationCardRaw
+	var rawConvCard ConversationCardRaw
 	var arr_cardConvObj []models.ConversationCard
 
 	var getQueryCardConv string = getQueryCardConv()

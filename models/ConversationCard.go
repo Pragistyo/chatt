@@ -5,7 +5,7 @@ import(
 	"reflect"
 	"log"
 	"context"
-	db "github.com/Pragistyo/chatt/db"
+	db "chatt/db"
 )
 
 

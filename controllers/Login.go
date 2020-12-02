@@ -7,8 +7,8 @@ import (
 	"context"
 	"encoding/json"
 	"regexp"
-	db "github.com/Pragistyo/chatt/db"
-	models "github.com/Pragistyo/chatt/models"
+	db "chatt/db"
+	models "chatt/models"
 )
 
 // type Response map[string]interface{}

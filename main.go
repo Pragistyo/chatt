@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
-	controllers "github.com/pragistyo/chatt/controllers"
+	controllers "chatt/controllers"
 )
 
 func main(){

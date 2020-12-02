@@ -6,7 +6,7 @@ import(
 	// "reflect"
 	"context"
 
-	db "github.com/Pragistyo/chatt/db"
+	db "chatt/db"
 	"github.com/joho/godotenv"
 
 	

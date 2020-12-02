@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	db "github.com/Pragistyo/chatt/db"
+	db "chatt/db"
 )
 
 type Response map[string]interface{}
