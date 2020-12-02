@@ -3,6 +3,8 @@ github.com/Pragistyo/chatt v0.0.0-20201126050301-47efa12c4436 h1:ZMw9KnWXj4FuUgl
 github.com/Pragistyo/chatt v0.0.0-20201126050301-47efa12c4436/go.mod h1:js91RgD0u5DmtIBHxUGI6mgv/YVX4CMMQVlzrsHS3CA=
 github.com/Pragistyo/chatt v0.0.0-20201126160356-6fae6d3aad2b h1:RxARlmyEjSmfJXVxhL7XRzXx9beJkJtBq2szVNAu57M=
 github.com/Pragistyo/chatt v0.0.0-20201126160356-6fae6d3aad2b/go.mod h1:207tSjLuWjUWVXRjYuPvUzXoVEhZjCfkcRHhGHvSODA=
+github.com/Pragistyo/chatt v0.0.0-20201202003942-0678f901b270 h1:yHbBccdk7xrXPx4FJ9Gs5qrGlfabbx30DBpaY6UyslQ=
+github.com/Pragistyo/chatt v0.0.0-20201202003942-0678f901b270/go.mod h1:DRrYh/uNyyzlp7e/qaweiUqF6YTm3PgQ7VUtcXOVrSw=
 github.com/cockroachdb/apd v1.1.0 h1:3LFP3629v+1aKXU5Q37mxmRxX/pIu1nijXydLShEq5I=
 github.com/cockroachdb/apd v1.1.0/go.mod h1:8Sl8LxpKi29FqWXR16WEFZRNSz3SoPzUzeMeY4+DwBQ=
 github.com/coreos/go-systemd v0.0.0-20190321100706-95778dfbb74e/go.mod h1:F5haX7vjVVG0kc13fIWeqUViNPyEJxv/OmvnBo0Yme4=
