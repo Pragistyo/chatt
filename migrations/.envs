@@ -1,0 +1,1 @@
+ELEPHANT_URL=postgres://your_database:your_password@your_host:your_port/your_database
