@@ -137,7 +137,7 @@ func UpdateMessagesRead(conn *pgxpool.Pool, chat_room_name string, opposite_user
 	var sqlStatement string=`
 	UPDATE Message 
 	SET read_time =$1
-	WHERE chat_room_name = $2 AND user_id = $3
+	WHERE chat_room_name = $2 AND user_id = $3 AND read_time is NULL
 	`
 	log.Println("====== hello ====== ", opposite_user_id)
 	resUpd, err := conn.Exec(context.Background(), sqlStatement, time.Now(), chat_room_name, opposite_user_id)
